@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Bot Platform</title>
+
+<style>
+body {
+  margin: 0;
+  background: #f3f3f3;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+h3 {
+  margin: 16px 0;
+}
+
+/* ===== สมัครสมาชิก ===== */
+.auth-box {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #ff7aa2;
+  color: white;
+  font-size: 16px;
+}
+
+/* ===== Carousel พื้นฐาน (ใช้ร่วมกัน) ===== */
+.carousel {
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.track {
+  display: flex;
+  transition: transform 0.35s ease;
+}
+
+/* ===== การ์ด (ฐาน) ===== */
+.card {
+  margin: 0 10px;
+  background: #ccc;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.4;
+  transform: scale(0.9);
+  transition: 0.3s;
+}
+
+/* การ์ดที่ถูกเลือก */
+.card.active {
+  background: #ff7aa2;
+  color: white;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ===== ยอดฮิต ===== */
+.hot .card {
+  min-width: 140px;
+  height: 160px;
+  font-size: 16px;
+}
+
+/* ===== Recommended (เล็กลง) ===== */
+.recommend .card {
+  min-width: 110px;
+  height: 120px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- สมัคร -->
+  <div class="auth-box">
+    <h3>สมัครสมาชิก</h3>
+    <input placeholder="อีเมล">
+    <input type="password" placeholder="รหัสผ่าน">
+    <button>สมัคร / เข้าสู่ระบบ</button>
+  </div>
+
+  <!-- ยอดฮิต -->
+  <h3>🔥 บอทยอดฮิต</h3>
+  <div class="carousel hot" id="hot">
+    <div class="track">
+      <div class="card">Bot 1</div>
+      <div class="card">Bot 2</div>
+      <div class="card">Bot 3</div>
+      <div class="card">Bot 4</div>
+      <div class="card">Bot 5</div>
+      <div class="card">Bot 6</div>
+      <div class="card">Bot 7</div>
+      <div class="card">Bot 8</div>
+      <div class="card">Bot 9</div>
+      <div class="card">Bot 10</div>
+    </div>
+  </div>
+
+  <!-- Recommended -->
+  <h3>✨ Recommended</h3>
+  <div class="carousel recommend" id="rec">
+    <div class="track">
+      <div class="card">Bot A</div>
+      <div class="card">Bot B</div>
+      <div class="card">Bot C</div>
+      <div class="card">Bot D</div>
+      <div class="card">Bot E</div>
+      <div class="card">Bot F</div>
+      <div class="card">Bot G</div>
+      <div class="card">Bot H</div>
+      <div class="card">Bot I</div>
+      <div class="card">+ ดูเพิ่ม</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function setupCarousel(id, cardWidth) {
+  const box = document.getElementById(id);
+  const track = box.querySelector('.track');
+  const cards = box.querySelectorAll('.card');
+  let current = 1;
+
+  function update() {
+    cards.forEach((c, i) =>
+      c.classList.toggle('active', i === current)
+    );
+    track.style.transform = `translateX(${(current - 1) * -cardWidth}px)`;
+  }
+
+  cards.forEach((card, i) => {
+    card.onclick = () => {
+      current = i;
+      update();
+    };
+  });
+
+  update();
+}
+
+setupCarousel('hot', 160);
+setupCarousel('rec', 130);
+</script>
+
+</body>
+</html>
+
