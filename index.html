@@ -2,23 +2,29 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Bot Platform</title>
 
 <style>
+/* ===== RESET / BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: #f3f3f3;
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
+  color: #333;
 }
 
+/* ===== CONTAINER (มือถือเป็นหลัก) ===== */
 .container {
+  width: 100%;
   max-width: 420px;
   margin: auto;
   padding: 16px;
-}
-
-h3 {
-  margin: 16px 0;
 }
 
 /* ===== สมัครสมาชิก ===== */
@@ -29,12 +35,18 @@ h3 {
   margin-bottom: 24px;
 }
 
+.auth-box h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
 .auth-box input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .auth-box button {
@@ -44,53 +56,114 @@ h3 {
   border-radius: 8px;
   background: #ff7aa2;
   color: white;
+  font-size: 15px;
+}
+
+/* ===== HEADERS ===== */
+h3 {
+  margin: 16px 0 10px;
   font-size: 16px;
 }
 
-/* ===== Carousel พื้นฐาน (ใช้ร่วมกัน) ===== */
+/* ===== HOT BOTS (มือถือ) ===== */
 .carousel {
   overflow: hidden;
-  margin-bottom: 24px;
+  height: 190px;
 }
 
 .track {
   display: flex;
+  align-items: center;
   transition: transform 0.35s ease;
 }
 
-/* ===== การ์ด (ฐาน) ===== */
-.card {
-  margin: 0 10px;
-  background: #ccc;
+.bot {
+  width: 120px;
+  height: 150px;
+  margin: 0 8px;
+  background: #ddd;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
   opacity: 0.4;
   transform: scale(0.9);
-  transition: 0.3s;
+  transition: 0.25s ease;
+  flex-shrink: 0;
 }
 
-/* การ์ดที่ถูกเลือก */
-.card.active {
+.bot.active {
   background: #ff7aa2;
   color: white;
   opacity: 1;
   transform: scale(1.1);
 }
 
-/* ===== ยอดฮิต ===== */
-.hot .card {
-  min-width: 140px;
-  height: 160px;
-  font-size: 16px;
+/* ===== RECOMMENDED (แถวเดียว ไม่มี scrollbar) ===== */
+.recommend-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* ===== Recommended (เล็กลง) ===== */
-.recommend .card {
-  min-width: 110px;
-  height: 120px;
-  font-size: 14px;
+.recommend-row::-webkit-scrollbar {
+  display: none;
+}
+
+.rec-bot {
+  width: 110px;
+  background: white;
+  border-radius: 14px;
+  padding: 8px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: 0.25s ease;
+}
+
+.rec-img {
+  background: #ddd;
+  height: 70px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+.rec-bot.active {
+  transform: scale(1.1);
+}
+
+.more {
+  background: #eee;
+  font-weight: bold;
+}
+
+/* ===== DESKTOP (คอม) ===== */
+@media (min-width: 768px) {
+  .container {
+    max-width: 900px;
+  }
+
+  .carousel {
+    height: 230px;
+  }
+
+  .bot {
+    width: 150px;
+    height: 180px;
+    font-size: 16px;
+  }
+
+  .rec-bot {
+    width: 140px;
+  }
+
+  .rec-img {
+    height: 90px;
+  }
 }
 </style>
 </head>
@@ -98,78 +171,85 @@ h3 {
 <body>
 <div class="container">
 
-  <!-- สมัคร -->
+  <!-- สมัครสมาชิก -->
   <div class="auth-box">
-    <h3>สมัครสมาชิก</h3>
+    <h2>สมัครสมาชิก</h2>
     <input placeholder="อีเมล">
     <input type="password" placeholder="รหัสผ่าน">
     <button>สมัคร / เข้าสู่ระบบ</button>
   </div>
 
-  <!-- ยอดฮิต -->
+  <!-- บอทยอดฮิต -->
   <h3>🔥 บอทยอดฮิต</h3>
-  <div class="carousel hot" id="hot">
-    <div class="track">
-      <div class="card">Bot 1</div>
-      <div class="card">Bot 2</div>
-      <div class="card">Bot 3</div>
-      <div class="card">Bot 4</div>
-      <div class="card">Bot 5</div>
-      <div class="card">Bot 6</div>
-      <div class="card">Bot 7</div>
-      <div class="card">Bot 8</div>
-      <div class="card">Bot 9</div>
-      <div class="card">Bot 10</div>
+  <div class="carousel">
+    <div class="track" id="track">
+      <div class="bot">Bot 1</div>
+      <div class="bot">Bot 2</div>
+      <div class="bot">Bot 3</div>
+      <div class="bot">Bot 4</div>
+      <div class="bot">Bot 5</div>
+      <div class="bot">Bot 6</div>
+      <div class="bot">Bot 7</div>
+      <div class="bot">Bot 8</div>
+      <div class="bot">Bot 9</div>
+      <div class="bot">Bot 10</div>
     </div>
   </div>
 
   <!-- Recommended -->
   <h3>✨ Recommended</h3>
-  <div class="carousel recommend" id="rec">
-    <div class="track">
-      <div class="card">Bot A</div>
-      <div class="card">Bot B</div>
-      <div class="card">Bot C</div>
-      <div class="card">Bot D</div>
-      <div class="card">Bot E</div>
-      <div class="card">Bot F</div>
-      <div class="card">Bot G</div>
-      <div class="card">Bot H</div>
-      <div class="card">Bot I</div>
-      <div class="card">+ ดูเพิ่ม</div>
-    </div>
+  <div class="recommend-row" id="recommend">
+    <div class="rec-bot"><div class="rec-img"></div>Bot A</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot B</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot C</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot D</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot E</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot F</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot G</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot H</div>
+    <div class="rec-bot"><div class="rec-img"></div>Bot I</div>
+    <div class="rec-bot more">+ ดูเพิ่ม</div>
   </div>
 
 </div>
 
 <script>
-function setupCarousel(id, cardWidth) {
-  const box = document.getElementById(id);
-  const track = box.querySelector('.track');
-  const cards = box.querySelectorAll('.card');
-  let current = 1;
+/* ===== HOT BOTS ===== */
+const bots = document.querySelectorAll('.bot');
+const track = document.getElementById('track');
+let current = 1;
 
-  function update() {
-    cards.forEach((c, i) =>
-      c.classList.toggle('active', i === current)
-    );
-    track.style.transform = `translateX(${(current - 1) * -cardWidth}px)`;
-  }
-
-  cards.forEach((card, i) => {
-    card.onclick = () => {
-      current = i;
-      update();
-    };
+function updateHot() {
+  bots.forEach((bot, i) => {
+    bot.classList.toggle('active', i === current);
   });
 
-  update();
+  const gap = 136; // ระยะที่เหมาะกับมือถือ
+  track.style.transform = `translateX(${(current - 1) * -gap}px)`;
 }
 
-setupCarousel('hot', 160);
-setupCarousel('rec', 130);
+bots.forEach((bot, index) => {
+  bot.onclick = () => {
+    current = index;
+    updateHot();
+  };
+});
+
+updateHot();
+
+/* ===== RECOMMENDED ===== */
+const recBots = document.querySelectorAll('.rec-bot');
+
+recBots.forEach(bot => {
+  bot.onclick = () => {
+    recBots.forEach(b => b.classList.remove('active'));
+    bot.classList.add('active');
+  };
+});
 </script>
 
 </body>
 </html>
+
+
 
