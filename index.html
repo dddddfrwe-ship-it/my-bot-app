@@ -92,7 +92,142 @@ h3 {
   flex-shrink: 0;
 }
 
-.hot-card.ac
+.hot-card.active {
+  background: #ff7aa2;
+  color: white;
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ===== RECOMMENDED ===== */
+.recommend-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.recommend-row::-webkit-scrollbar {
+  display: none;
+}
+
+.rec-card {
+  width: 110px;
+  background: white;
+  border-radius: 14px;
+  padding: 8px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: 0.25s ease;
+}
+
+.rec-img {
+  height: 70px;
+  background: #ddd;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+.rec-card.active {
+  transform: scale(1.1);
+}
+
+.more {
+  background: #eee;
+  font-weight: bold;
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 768px) {
+  .container {
+    max-width: 1100px;
+  }
+
+  .hot-card {
+    min-width: 180px;
+    height: 220px;
+    font-size: 16px;
+  }
+
+  .rec-card {
+    width: 150px;
+  }
+
+  .rec-img {
+    height: 100px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- AUTH -->
+  <div class="auth-box">
+    <h2>สมัครสมาชิก</h2>
+    <input placeholder="อีเมล">
+    <input type="password" placeholder="รหัสผ่าน">
+    <button>สมัคร / เข้าสู่ระบบ</button>
+  </div>
+
+  <!-- HOT -->
+  <h3>🔥 บอทยอดฮิต</h3>
+  <div class="hot-scroll" id="hotScroll">
+    <div class="hot-card">Bot 1</div>
+    <div class="hot-card">Bot 2</div>
+    <div class="hot-card">Bot 3</div>
+    <div class="hot-card">Bot 4</div>
+    <div class="hot-card">Bot 5</div>
+    <div class="hot-card">Bot 6</div>
+    <div class="hot-card">Bot 7</div>
+    <div class="hot-card">Bot 8</div>
+    <div class="hot-card">Bot 9</div>
+    <div class="hot-card">Bot 10</div>
+  </div>
+
+  <!-- RECOMMENDED -->
+  <h3>✨ Recommended</h3>
+  <div class="recommend-row" id="recommend">
+    <div class="rec-card"><div class="rec-img"></div>Bot A</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot B</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot C</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot D</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot E</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot F</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot G</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot H</div>
+    <div class="rec-card"><div class="rec-img"></div>Bot I</div>
+    <div class="rec-card more">+ ดูเพิ่ม</div>
+  </div>
+
+</div>
+
+<script>
+/* ===== HOT ACTIVE ===== */
+const hotCards = document.querySelectorAll('.hot-card');
+hotCards.forEach(card => {
+  card.addEventListener('click', () => {
+    hotCards.forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  });
+});
+
+/* ===== RECOMMENDED ACTIVE ===== */
+const recCards = document.querySelectorAll('.rec-card');
+recCards.forEach(card => {
+  card.addEventListener('click', () => {
+    recCards.forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
+
+
 
 
 
