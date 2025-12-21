@@ -7,10 +7,8 @@
 <title>Bot Platform</title>
 
 <style>
-/* ===== RESET / BASE ===== */
-* {
-  box-sizing: border-box;
-}
+/* ===== RESET ===== */
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -19,7 +17,7 @@ body {
   color: #333;
 }
 
-/* ===== CONTAINER (มือถือเป็นหลัก) ===== */
+/* ===== CONTAINER ===== */
 .container {
   width: 100%;
   max-width: 420px;
@@ -27,9 +25,9 @@ body {
   padding: 16px;
 }
 
-/* ===== สมัครสมาชิก ===== */
+/* ===== AUTH ===== */
 .auth-box {
-  background: white;
+  background: #fff;
   padding: 16px;
   border-radius: 14px;
   margin-bottom: 24px;
@@ -46,7 +44,6 @@ body {
   margin-bottom: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;
 }
 
 .auth-box button {
@@ -61,195 +58,42 @@ body {
 
 /* ===== HEADERS ===== */
 h3 {
-  margin: 16px 0 10px;
+  margin: 18px 0 10px;
   font-size: 16px;
 }
 
-/* ===== HOT BOTS (มือถือ) ===== */
-.carousel {
-  overflow: hidden;
-  height: 190px;
-}
-
-.track {
+/* ===== HOT BOTS ===== */
+.hot-scroll {
   display: flex;
-  align-items: center;
-  transition: transform 0.35s ease;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 0;
 }
 
-.bot {
-  width: 120px;
-  height: 150px;
-  margin: 0 8px;
+.hot-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hot-card {
+  min-width: 120px;
+  height: 160px;
   background: #ddd;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  opacity: 0.4;
+  opacity: 0.5;
   transform: scale(0.9);
   transition: 0.25s ease;
+  scroll-snap-align: center;
   flex-shrink: 0;
 }
 
-.bot.active {
-  background: #ff7aa2;
-  color: white;
-  opacity: 1;
-  transform: scale(1.1);
-}
+.hot-card.ac
 
-/* ===== RECOMMENDED (แถวเดียว ไม่มี scrollbar) ===== */
-.recommend-row {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.recommend-row::-webkit-scrollbar {
-  display: none;
-}
-
-.rec-bot {
-  width: 110px;
-  background: white;
-  border-radius: 14px;
-  padding: 8px;
-  text-align: center;
-  flex-shrink: 0;
-  transition: 0.25s ease;
-}
-
-.rec-img {
-  background: #ddd;
-  height: 70px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-}
-
-.rec-bot.active {
-  transform: scale(1.1);
-}
-
-.more {
-  background: #eee;
-  font-weight: bold;
-}
-
-/* ===== DESKTOP (คอม) ===== */
-@media (min-width: 768px) {
-  .container {
-    max-width: 900px;
-  }
-
-  .carousel {
-    height: 230px;
-  }
-
-  .bot {
-    width: 150px;
-    height: 180px;
-    font-size: 16px;
-  }
-
-  .rec-bot {
-    width: 140px;
-  }
-
-  .rec-img {
-    height: 90px;
-  }
-}
-</style>
-</head>
-
-<body>
-<div class="container">
-
-  <!-- สมัครสมาชิก -->
-  <div class="auth-box">
-    <h2>สมัครสมาชิก</h2>
-    <input placeholder="อีเมล">
-    <input type="password" placeholder="รหัสผ่าน">
-    <button>สมัคร / เข้าสู่ระบบ</button>
-  </div>
-
-  <!-- บอทยอดฮิต -->
-  <h3>🔥 บอทยอดฮิต</h3>
-  <div class="carousel">
-    <div class="track" id="track">
-      <div class="bot">Bot 1</div>
-      <div class="bot">Bot 2</div>
-      <div class="bot">Bot 3</div>
-      <div class="bot">Bot 4</div>
-      <div class="bot">Bot 5</div>
-      <div class="bot">Bot 6</div>
-      <div class="bot">Bot 7</div>
-      <div class="bot">Bot 8</div>
-      <div class="bot">Bot 9</div>
-      <div class="bot">Bot 10</div>
-    </div>
-  </div>
-
-  <!-- Recommended -->
-  <h3>✨ Recommended</h3>
-  <div class="recommend-row" id="recommend">
-    <div class="rec-bot"><div class="rec-img"></div>Bot A</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot B</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot C</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot D</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot E</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot F</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot G</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot H</div>
-    <div class="rec-bot"><div class="rec-img"></div>Bot I</div>
-    <div class="rec-bot more">+ ดูเพิ่ม</div>
-  </div>
-
-</div>
-
-<script>
-/* ===== HOT BOTS ===== */
-const bots = document.querySelectorAll('.bot');
-const track = document.getElementById('track');
-let current = 1;
-
-function updateHot() {
-  bots.forEach((bot, i) => {
-    bot.classList.toggle('active', i === current);
-  });
-
-  const gap = 136; // ระยะที่เหมาะกับมือถือ
-  track.style.transform = `translateX(${(current - 1) * -gap}px)`;
-}
-
-bots.forEach((bot, index) => {
-  bot.onclick = () => {
-    current = index;
-    updateHot();
-  };
-});
-
-updateHot();
-
-/* ===== RECOMMENDED ===== */
-const recBots = document.querySelectorAll('.rec-bot');
-
-recBots.forEach(bot => {
-  bot.onclick = () => {
-    recBots.forEach(b => b.classList.remove('active'));
-    bot.classList.add('active');
-  };
-});
-</script>
-
-</body>
-</html>
 
 
 
